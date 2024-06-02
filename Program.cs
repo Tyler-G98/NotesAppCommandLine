@@ -82,4 +82,34 @@ internal class Program
             NewNote.Close();
         }
     }
+
+    private static void EditNote()
+    {
+        Console.WriteLine("Please enter the name of the note\n");
+
+        string fileName = Console.ReadLine().ToLower();
+
+        if(File.Exists(NoteDirectory + fileName))
+        {
+            XmlDocument doc = new XmlDocument();
+            try
+            {
+                doc.Load(NoteDirectory + fileName);
+                Console.Write(doc.SelectSingleNode("//body").InnerText);
+                string readInput = Console.ReadLine();
+
+                if(readInput.ToLower() == "cancel")
+                {
+                    Main(null);
+                }
+                else
+                {
+                    string newText = doc.SelectSingleNode("//body").InnerText = readInput;
+                    doc.Save(NoteDirectory + fileName);
+                }
+
+                
+            }
+        }
+    }
 }
