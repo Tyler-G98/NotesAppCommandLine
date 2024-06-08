@@ -153,4 +153,49 @@ internal class Program
             }
         }
     }
+
+    private static void ShowNotes()
+    {
+        string NoteLocation = NoteDirectory;
+
+        DirectoryInfo Dir = new DirectoryInfo(NoteLocation);
+
+        if (Directory.Exists(NoteLocation))
+        {
+
+            FileInfo[] NoteFiles = Dir.GetFiles("*.xml");
+
+            if (NoteFiles.Count() != 0)
+            {
+
+                Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop + 2);
+                Console.WriteLine("+------------+");
+                foreach (var item in NoteFiles)
+                {
+                    Console.WriteLine("  " + item.Name);
+                }
+
+                Console.WriteLine(Environment.NewLine);
+            }
+            else
+            {
+                Console.WriteLine("No notes found.\n");
+            }
+        }
+        else
+        {
+
+            Console.WriteLine(" Directory does not exist.....creating directory\n");
+
+            Directory.CreateDirectory(NoteLocation);
+
+            Console.WriteLine(" Directory: " + NoteLocation + " created successfully.\n");
+
+        }
+    }
+
+    private static void NotesDirectory()
+    {
+        Process.Start("explorer.exe", NoteDirectory);
+    }
 }
