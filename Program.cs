@@ -119,5 +119,38 @@ internal class Program
         }
     }
 
+    private static void DeleteNote()
+    {
+        Console.WriteLine("Please enter the name of the note\n");
 
+        string fileName = Console.ReadLine();
+
+        if(File.Exists(NoteDirectory + fileName))
+        {
+            Console.WriteLine("Are you sure you want to delete this note? (Y/N)\n");
+            string confirmation = Console.ReadLine().ToLower();
+
+            if (confirmation == "y")
+            {
+                try
+                {
+                    File.Delete(NoteDirectory + fileName);
+                    Console.WriteLine("Note deleted successfully");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("couldn't delete the file because of an error: " + ex.Message);
+                }
+            }
+            else if(confirmation == "n")
+            {
+                Main(null);
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+                DeleteNote();
+            }
+        }
+    }
 }
