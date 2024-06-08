@@ -107,9 +107,17 @@ internal class Program
                     string newText = doc.SelectSingleNode("//body").InnerText = readInput;
                     doc.Save(NoteDirectory + fileName);
                 }
-
-                
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine("Couldn't edit this note because of an error: " + ex.Message);
             }
         }
+        else
+        {
+            Console.WriteLine("Note not found");
+        }
     }
+
+
 }
