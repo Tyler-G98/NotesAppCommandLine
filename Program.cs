@@ -7,6 +7,7 @@ internal class Program
 {
     static void Main(string[] args)
     {
+        CommandsAvailable();
         ReadCommand();
         Console.ReadLine();
     }
@@ -55,6 +56,31 @@ internal class Program
                 CommandsAvailable();
                 Main(null);
                 break;
+        }
+    }
+
+    private static void ReadNote()
+    {
+        Console.WriteLine("Please enter the name of the note\n");
+
+        string fileName = Console.ReadLine().ToLower();
+
+        if(File.Exists(NoteDirectory + fileName))
+        {
+            XmlDocument doc = new XmlDocument();
+            try
+            {
+                doc.Load(NoteDirectory + fileName);
+                Console.WriteLine(doc.SelectSingleNode("//body").InnerText);
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine("Couldn't read this note because of an error: " + ex.Message);
+            }
+        }
+        else
+        {
+            Console.WriteLine("Note not found");
         }
     }
 
@@ -197,5 +223,23 @@ internal class Program
     private static void NotesDirectory()
     {
         Process.Start("explorer.exe", NoteDirectory);
+    }
+
+    private static void CommandsAvailable()
+    {
+        Console.WriteLine("Commands available: \n");
+        Console.WriteLine("new - Create a new note\n");
+        Console.WriteLine("edit - Edit a note\n");
+        Console.WriteLine("read - Read a note\n");
+        Console.WriteLine("delete - Delete a note\n");
+        Console.WriteLine("shownotes - Show all notes\n");
+        Console.WriteLine("dir - Open notes directory\n");
+        Console.WriteLine("cls - Clear console\n");
+        Console.WriteLine("exit - Exit the program\n");
+    }
+
+    private static void Exit()
+    {
+        Environment.Exit(0);
     }
 }
